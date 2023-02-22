@@ -1,0 +1,40 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema",
+  "type" : "object",
+  "properties" : {
+    "bemerkungAusgaben" : {
+      "type" : [ "string", "null" ]
+    },
+    "berechnungsmodell" : {
+      "type" : "string",
+      "enum" : [ "VKO", "PAUSCH_BETR", "PAUSCH_KAT" ]
+    },
+    "id" : {
+      "type" : "integer"
+    },
+    "summeAufteilungenGesamt" : {
+      "type" : "number"
+    },
+    "summeAufteilungenGesamtBewilligt" : {
+      "type" : "number"
+    },
+    "summeAusgabenGesamt" : {
+      "type" : "number"
+    },
+    "summeAusgabenGesamtBewilligt" : {
+      "type" : "number"
+    },
+    "summeFinanzierungenGesamt" : {
+      "type" : "number"
+    },
+    "summeFinanzierungenGesamtBewilligt" : {
+      "type" : "number"
+    },
+    "summeZuschussGesamt" : {
+      "type" : "number"
+    },
+    "summeZuschussGesamtBewilligt" : {
+      "type" : "number"
+    }
+  }
+}

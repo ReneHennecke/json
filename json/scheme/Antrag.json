@@ -1,0 +1,33 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema",
+  "type" : "object",
+  "properties" : {
+    "AusgabenBerechnungen" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "email" : {
+      "type" : "string",
+      "minLength" : 6,
+      "maxLength" : 127,
+      "pattern" : "/[a-z0-9\\._%+!$&*=^|~#%{}/\\-]+@([a-z0-9\\-]+\\.){1,}([a-z]{2,22})/"
+    },
+    "foerdergegenstand" : {
+      "type" : "string"
+    },
+    "foerderprogramm" : {
+      "type" : "string"
+    },
+    "id" : {
+      "type" : "integer"
+    },
+    "username" : {
+      "type" : [ "string", "null" ]
+    }
+  },
+  "required" : [ "foerdergegenstand", "foerderprogramm", "id" ]
+}

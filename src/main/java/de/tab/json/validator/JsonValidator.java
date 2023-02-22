@@ -3,6 +3,7 @@ package de.tab.json.validator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.imifou.jsonschema.module.addon.AddonModule;
 import com.github.victools.jsonschema.generator.*;
 import com.github.victools.jsonschema.module.jackson.JacksonModule;
 import com.github.victools.jsonschema.module.jackson.JacksonOption;
@@ -101,9 +102,11 @@ public class JsonValidator {
     public static <T> JsonNode buildJsonSchemeCombine(Class<T> contractClass) {
         JacksonModule moduleJackson = new JacksonModule(JacksonOption.RESPECT_JSONPROPERTY_REQUIRED);
         JavaxValidationModule moduleJavax = new JavaxValidationModule();
+        AddonModule moduleAddOn = new AddonModule();
         SchemaGeneratorConfigBuilder configBuilder = new SchemaGeneratorConfigBuilder(SchemaVersion.DRAFT_2019_09, OptionPreset.PLAIN_JSON)
                 .with(moduleJackson)
-                .with(moduleJavax);
+                .with(moduleJavax)
+                .with(moduleAddOn);
         SchemaGeneratorConfig config = configBuilder.build();
         SchemaGenerator generator = new SchemaGenerator(config);
         JsonNode jsonSchema = generator.generateSchema(contractClass);
@@ -117,13 +120,29 @@ public class JsonValidator {
         if (!className.isEmpty() && !parentClassName.isEmpty()) {
             JsonNode substituteNode = scheme.findParent(parentClassName);
             if (substituteNode != null) {
-                ((ObjectNode) substituteNode).remove(parentClassName);  // remove place holder in json scheme
-                ((ObjectNode) substituteNode).put(className, sub);      // put new object in json scheme}
-                //((ObjectNode) substituteNode).put(className, "*");
-                // update required entries
+                ObjectNode o = (ObjectNode) substituteNode;
+                o.remove(parentClassName);  // remove place holder in json scheme
+                o.put(className, sub);      // put new object in json scheme
+                // update required entries ?
             }
         }
 
         return scheme;
     }
+
+    public static JsonValidationErrorResult validateJson(JsonNode scheme, JsonNode json) {
+        JsonValidationErrorResult result = JsonValidationErrorResult.getInstance();
+        JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V201909);
+        JsonSchema jsonSchema = jsonSchemaFactory.getSchema(scheme);
+        Set<ValidationMessage> errors = jsonSchema.validate(json);
+        int size = errors.size();
+        if (size > 0) {
+            result.setErrorCode(-1001);
+            result.setDescription("(" + size + ") Validierungsfehler");
+            for (ValidationMessage msg : errors)
+                result.addValidationError(msg);
+        }
+        return result;
+    }
+
 }

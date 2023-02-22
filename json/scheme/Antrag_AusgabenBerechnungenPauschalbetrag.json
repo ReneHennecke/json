@@ -1,0 +1,52 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema",
+  "type" : "object",
+  "properties" : {
+    "email" : {
+      "type" : "string",
+      "minLength" : 6,
+      "maxLength" : 127,
+      "pattern" : "/[a-z0-9\\._%+!$&*=^|~#%{}/\\-]+@([a-z0-9\\-]+\\.){1,}([a-z]{2,22})/"
+    },
+    "foerdergegenstand" : {
+      "type" : "string"
+    },
+    "foerderprogramm" : {
+      "type" : "string"
+    },
+    "id" : {
+      "type" : "integer"
+    },
+    "username" : {
+      "type" : [ "string", "null" ]
+    },
+    "AusgabenBerechnungenPauschalbetrag" : {
+      "$schema" : "https://json-schema.org/draft/2019-09/schema",
+      "type" : "object",
+      "properties" : {
+        "bemerkungAusgaben" : {
+          "type" : [ "string", "null" ]
+        },
+        "id" : {
+          "type" : "integer"
+        },
+        "summeAusgabenGesamt" : {
+          "type" : "number"
+        },
+        "summeAusgabenGesamtBewilligt" : {
+          "type" : "number"
+        },
+        "summeZuschussGesamt" : {
+          "type" : "number"
+        },
+        "summeZuschussGesamtBewilligt" : {
+          "type" : "number"
+        },
+        "teilzieleGesamt" : {
+          "type" : "number"
+        }
+      }
+    }
+  },
+  "required" : [ "foerdergegenstand", "foerderprogramm", "id" ]
+}

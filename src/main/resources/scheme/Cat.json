@@ -1,0 +1,17 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema",
+  "type" : "object",
+  "properties" : {
+    "length" : {
+      "type" : [ "number", "null" ]
+    },
+    "name" : {
+      "type" : "string",
+      "minLength" : 1
+    },
+    "weight" : {
+      "type" : "number"
+    }
+  },
+  "required" : [ "name" ]
+}
