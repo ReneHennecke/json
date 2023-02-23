@@ -123,7 +123,7 @@ public class JsonValidator {
                 ObjectNode o = (ObjectNode) substituteNode;
                 o.remove(parentClassName);  // remove place holder in json scheme
                 o.put(className, sub);      // put new object in json scheme
-                // update required entries ?
+                // update entries in required array?
             }
         }
 

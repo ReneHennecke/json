@@ -28,7 +28,7 @@ public class Antrag implements Serializable {
 
     @JsonProperty(value= "email", required = false)
     @Size(min= 6, max=127)
-    //@JsonSchema(pattern="/[a-z0-9\\._%+!$&*=^|~#%{}/\\-]+@([a-z0-9\\-]+\\.){1,}([a-z]{2,22})/")
+    //@JsonSchema(pattern="[a-z0-9\\._%+!$&*=^|~#%{}/\\-]+@([a-z0-9\\-]+\\.){1,}([a-z]{2,22})")
     @JsonSchema(pattern="^(.+)@(.+)$")
     private String email;
 

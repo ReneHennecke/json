@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.networknt.schema.ValidationMessage;
 import de.tab.json.model.Antrag;
 import de.tab.json.model.AusgabenBerechnungenPauschalbetrag;
 import de.tab.json.model.AusgabenBerechnungenVKO;
@@ -95,7 +96,7 @@ public class JsonValidatorTest {
     }
 
     @Test
-    void validateAntrag() {
+    void validateAntragValid() {
         JsonValidationErrorResult result = JsonValidationErrorResult.getInstance();
 
         // Schema holen
@@ -117,6 +118,32 @@ public class JsonValidatorTest {
         assertTrue(result.success());
 
 
+    }
+
+    @Test
+    void validateAntragNotValid() {
+        JsonValidationErrorResult result = JsonValidationErrorResult.getInstance();
+
+        // Schema holen
+        JsonNode scheme = JsonValidator.buildJsonSchemeCombine(Antrag.class);
+        JsonNode ausgabenBerechnungenVKOScheme = JsonValidator.buildJsonSchemeCombine(AusgabenBerechnungenVKO.class);
+        scheme = JsonValidator.substituteScheme(scheme, AusgabenBerechnungenVKO.class, ausgabenBerechnungenVKOScheme);
+
+        try {
+            JsonNode json = JsonValidatorHelper.loadJson("Antrag_AusgabenBerechnungenVKO_invalid");
+            result = JsonValidator.validateJson(scheme, json);
+        }
+        catch (Exception ex) {
+            result.setErrorCode(-1002);
+            result.setDescription(ex.getMessage());
+            result.setException(ex);
+        }
+
+        System.out.println();
+        for (ValidationMessage vmsg : result.getErrorList())
+            System.out.println("Path: " + vmsg.getSchemaPath() + "  Error: " + vmsg.getMessage());
+
+        assertTrue(!result.success());
     }
 
     @Test

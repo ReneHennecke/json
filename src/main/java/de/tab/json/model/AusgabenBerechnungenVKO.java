@@ -1,10 +1,13 @@
 package de.tab.json.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Optional;
 
 public class AusgabenBerechnungenVKO extends AusgabenBerechnungen implements SerializableAusgabenBerechnungenVKO {
+    //@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY)
     private Berechnungsmodell berechnungsmodell;
 
     //private List<VorhabenskategorieAusgaben> vorhabenskategorieAusgaben;

@@ -14,7 +14,7 @@
       "type" : "string",
       "minLength" : 6,
       "maxLength" : 127,
-      "pattern" : "/[a-z0-9\\._%+!$&*=^|~#%{}/\\-]+@([a-z0-9\\-]+\\.){1,}([a-z]{2,22})/"
+      "pattern" : "^(.+)@(.+)$"
     },
     "foerdergegenstand" : {
       "type" : "string"
